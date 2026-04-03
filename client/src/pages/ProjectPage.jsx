@@ -1,9 +1,11 @@
+// ================= PROJECT PAGE =================
+
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import API from "../api/axios";
 
 const ProjectPage = () => {
-  const { projectId } = useParams();
+  const { projectId } = useParams(); // get project ID from URL
 
   const [project, setProject] = useState(null);
   const [tasks, setTasks] = useState([]);
@@ -24,6 +26,7 @@ const ProjectPage = () => {
 
   const loadPage = async () => {
     try {
+      // fetch project + tasks at the same time
       setLoading(true);
 
       const [projectRes, tasksRes] = await Promise.all([
@@ -33,12 +36,13 @@ const ProjectPage = () => {
 
       setProject(projectRes.data);
 
+      // backend uses "title", so I map it to "name" for my form
       setProjectForm({
         name: projectRes.data.title,
         description: projectRes.data.description || "",
       });
 
-      setTasks(tasksRes.data || []);
+      setTasks(tasksRes.data || []); // ensure tasks is always an array
     } catch (err) {
       setError(err.message);
     } finally {
@@ -63,6 +67,7 @@ const ProjectPage = () => {
   const createTask = async (e) => {
     e.preventDefault();
     try {
+      // create new task tied to this project
       const { data } = await API.post(`/projects/${projectId}/tasks`, taskForm);
 
       setTasks([data, ...tasks]);
@@ -74,6 +79,7 @@ const ProjectPage = () => {
 
   const updateTaskStatus = async (taskId, status) => {
     try {
+      // update task status (To Do → In Progress → Done)
       const { data } = await API.put(`/projects/${projectId}/tasks/${taskId}`, {
         status,
       });

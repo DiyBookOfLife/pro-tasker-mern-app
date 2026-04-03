@@ -13,7 +13,7 @@ const DashboardPage = () => {
   const fetchProjects = async () => {
     try {
       setLoading(true);
-      const { data } = await API.get("/projects");
+      const { data } = await API.get("/projects"); // fetch all projects for this user
       setProjects(data);
     } catch (err) {
       setError(err.message);
@@ -23,7 +23,7 @@ const DashboardPage = () => {
   };
 
   useEffect(() => {
-    fetchProjects();
+    fetchProjects(); // load projects when page first mounts
   }, []);
 
   const handleCreate = async (e) => {
@@ -31,9 +31,9 @@ const DashboardPage = () => {
     setError("");
 
     try {
-      const { data: newProject } = await API.post("/projects", form);
+      const { data: newProject } = await API.post("/projects", form); // create new project
 
-      setProjects([newProject, ...projects]);
+      setProjects([newProject, ...projects]); // add it to UI immediately
       setForm({ name: "", description: "" });
     } catch (err) {
       setError(err.message);
@@ -42,8 +42,8 @@ const DashboardPage = () => {
 
   const handleDelete = async (projectId) => {
     try {
-      await API.delete(`/projects/${projectId}`);
-      setProjects(projects.filter((project) => project._id !== projectId));
+      await API.delete(`/projects/${projectId}`); // delete from backend
+      setProjects(projects.filter((project) => project._id !== projectId)); //update UI
     } catch (err) {
       setError(err.message);
     }

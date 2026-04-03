@@ -1,3 +1,5 @@
+// ================= REGISTER PAGE =================
+
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import API from "../api/axios";
@@ -6,7 +8,7 @@ import { useAuth } from "../context/AuthContext";
 const RegisterPage = () => {
   const [form, setForm] = useState({ username: "", email: "", password: "" });
   const [error, setError] = useState("");
-  const { login } = useAuth();
+  const { login } = useAuth(); // reuse login after registering
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -19,10 +21,11 @@ const RegisterPage = () => {
     setError("");
 
     try {
+      // send new user data to backend
       const { data } = await API.post("/users/register", form);
 
-      login(data);
-      navigate("/");
+      login(data); // auto-login after successful register
+      navigate("/"); // go straight to dashboard
     } catch (err) {
       console.log(err);
       setError(err.message);

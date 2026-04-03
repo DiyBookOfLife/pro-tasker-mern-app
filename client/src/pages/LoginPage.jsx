@@ -1,3 +1,5 @@
+// ================= LOGIN PAGE =================
+
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import API from "../api/axios";
@@ -6,7 +8,7 @@ import { useAuth } from "../context/AuthContext";
 const LoginPage = () => {
   const [form, setForm] = useState({ email: "", password: "" });
   const [error, setError] = useState("");
-  const { login } = useAuth();
+  const { login } = useAuth(); // gives me access to login() from context
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -16,17 +18,12 @@ const LoginPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    console.log("STEP 1: submit fired");
-
     try {
-      console.log("STEP 2: before request");
-
+      // send login request to backend
       const res = await API.post("/users/login", form);
 
-      console.log("STEP 3: response", res);
-
-      login(res.data);
-      navigate("/");
+      login(res.data); // store token + user globally
+      navigate("/"); // redirect to dashboard after login
     } catch (err) {
       console.log("STEP 4: error", err);
     }
