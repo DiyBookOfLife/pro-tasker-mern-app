@@ -10,7 +10,7 @@ import {
 } from "../controllers/taskController.js";
 
 const router = express.Router({ mergeParams: true });
-
+// all routes protected
 router.post("/", authMiddleware, createTask);
 
 router.get("/", authMiddleware, getTasks);

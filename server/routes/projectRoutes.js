@@ -10,7 +10,7 @@ import {
 } from "../controllers/projectController.js";
 
 const router = express.Router();
-
+// all routes protected
 router.post("/", authMiddleware, createProject);
 
 router.get("/", authMiddleware, getProjects);

@@ -4,9 +4,9 @@ import { generateToken } from "../utils/generateToken.js";
 
 export const registerUser = async (req, res) => {
   try {
-    console.log("BODY:", req.body);
     const { username, email, password } = req.body;
 
+    // prevent duplicate users (same email or username)
     const exists = await User.findOne({
       $or: [{ email }, { username }],
     });
@@ -15,6 +15,7 @@ export const registerUser = async (req, res) => {
       return res.status(400).json({ msg: "User already exists" });
     }
 
+    // hash password before saving (security)
     const hashed = await bcrypt.hash(password, 10);
 
     const user = await User.create({
@@ -23,6 +24,7 @@ export const registerUser = async (req, res) => {
       password: hashed,
     });
 
+    // return user + token so they are immediately logged in
     res.status(201).json({
       _id: user._id,
       username: user.username,
@@ -48,12 +50,14 @@ export const loginUser = async (req, res) => {
       return res.status(400).json({ msg: "User not found" });
     }
 
+    // compare entered password with hashed password
     const valid = await bcrypt.compare(password, user.password);
 
     if (!valid) {
       return res.status(400).json({ msg: "Invalid password" });
     }
 
+    // return user + token for authentication
     res.json({
       _id: user._id,
       username: user.username,
@@ -67,6 +71,7 @@ export const loginUser = async (req, res) => {
 };
 
 export const getMe = async (req, res) => {
+  // get current logged-in user (without password)
   const user = await User.findById(req.user.id).select("-password");
   res.json(user);
 };
