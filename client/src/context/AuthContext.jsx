@@ -11,6 +11,7 @@ export const AuthProvider = ({ children }) => {
   const login = (data) => {
     // save token so user stays logged in after refresh
     localStorage.setItem("token", data.token);
+    localStorage.setItem("user", JSON.stringify(data)); // update to save user
     setUser(data);
   };
 

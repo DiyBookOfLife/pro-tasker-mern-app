@@ -54,7 +54,7 @@ const DashboardPage = () => {
       <div className="topbar">
         <div>
           <h1>Pro-Tasker</h1>
-          <p>Welcome, {user?.name}</p>
+          <p>Welcome, {user?.username}</p>
         </div>
         <button onClick={logout}>Logout</button>
       </div>
@@ -86,11 +86,11 @@ const DashboardPage = () => {
         <div className="grid">
           {projects.map((project) => (
             <div key={project._id} className="card">
-              <h3>{project.name}</h3>
+              <h3>{project.title}</h3>
               <p>{project.description}</p>
               <div className="row">
                 <Link to={`/projects/${project._id}`} className="button-link">
-                  Open
+                  Edit
                 </Link>
                 <button onClick={() => handleDelete(project._id)}>
                   Delete
