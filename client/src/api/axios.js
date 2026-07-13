@@ -2,7 +2,7 @@ import axios from "axios";
 
 // create one central axios instance so I don’t have to repeat the base URL everywhere
 const API = axios.create({
-  baseURL: "https://pro-tasker-backend-t7ye.onrender.com/api",
+  baseURL: "http://127.0.0.1:10000/api",
 });
 
 // interceptor runs BEFORE every request is sent

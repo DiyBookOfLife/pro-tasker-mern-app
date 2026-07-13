@@ -7,6 +7,7 @@ import connectDB from "./config/db.js";
 import userRoutes from "./routes/userRoutes.js";
 import projectRoutes from "./routes/projectRoutes.js";
 import taskRoutes from "./routes/taskRoutes.js";
+import aiRoutes from "./routes/aiRoutes.js";
 
 dotenv.config();
 connectDB();
@@ -26,6 +27,7 @@ app.get("/", (req, res) => {
 app.use("/api/users", userRoutes);
 app.use("/api/projects", projectRoutes);
 app.use("/api/projects/:projectId/tasks", taskRoutes);
+app.use("/api/ai", aiRoutes);
 
 // fallback PORT
 const PORT = process.env.PORT || 7000;

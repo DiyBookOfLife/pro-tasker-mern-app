@@ -24,6 +24,9 @@ const ProjectPage = () => {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(true);
 
+  const [aiPlan, setAiPlan] = useState("");
+  const [aiLoading, setAiLoading] = useState(false);
+
   const loadPage = async () => {
     try {
       // fetch project + tasks at the same time
@@ -99,6 +102,25 @@ const ProjectPage = () => {
     }
   };
 
+  const generateAIPlan = async () => {
+    try {
+      setAiLoading(true);
+      setError("");
+
+      const { data } = await API.post("/ai/project-plan", {
+        projectName: projectForm.name,
+        projectDescription: projectForm.description,
+        tasks,
+      });
+
+      setAiPlan(data.plan);
+    } catch (err) {
+      setError(err.response?.data?.message || "Unable to generate an AI plan.");
+    } finally {
+      setAiLoading(false);
+    }
+  };
+
   if (loading) return <div className="container">Loading...</div>;
   if (!project) return <div className="container">Project not found</div>;
 
@@ -126,6 +148,22 @@ const ProjectPage = () => {
         <button>Save</button>
       </form>
 
+      <div className="card form">
+        <h2>AI Project Assistant</h2>
+
+        <p>Have AI review this project and recommend the next steps.</p>
+
+        <button type="button" onClick={generateAIPlan} disabled={aiLoading}>
+          {aiLoading ? "AI is reviewing..." : "Generate AI Plan"}
+        </button>
+
+        {aiPlan && (
+          <div className="ai-plan">
+            <h3>AI's Recommendations</h3>
+            <p style={{ whiteSpace: "pre-wrap" }}>{aiPlan}</p>
+          </div>
+        )}
+      </div>
       <form onSubmit={createTask} className="card form">
         <h2>Add Task</h2>
         <input

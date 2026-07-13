@@ -1,6 +1,6 @@
-# Pro-Tasker – Full Stack MERN Application
+# Pro-Tasker – AI-Powered Full Stack MERN Application
 
-A full-stack project management application that allows users to register, log in, create projects, and manage tasks within those projects. Built using the MERN stack with a secure backend API and a responsive React frontend.
+A full-stack project management application that allows users to register, log in, create projects, manage tasks, and generate AI-powered project recommendations. Built with the MERN stack, JWT authentication, MongoDB Atlas, and Cohere AI.
 
 ---
 
@@ -10,7 +10,7 @@ Frontend:
 https://pro-tasker-frontend.netlify.app
 
 Backend API:
-https://pro-tasker-backend-t7ye.onrender.com
+https://pro-tasker-backend-t7ye.onrender.com/api
 
 ---
 
@@ -22,6 +22,7 @@ https://pro-tasker-backend-t7ye.onrender.com
 - Node.js
 - Axios
 - JSON Web Tokens (JWT)
+- Cohere AI API
 - Netlify (Frontend Deployment)
 - Render (Backend Deployment)
 
@@ -31,8 +32,10 @@ https://pro-tasker-backend-t7ye.onrender.com
 
 - User registration and login (JWT authentication)
 - Create, view, and manage projects
+- Create tasks within projects 
 - Secure routes (only logged-in users can access data)
 - Each user can only access their own projects
+- AI-powered project recommendations using the Cohere Chat API
 - Full frontend ↔ backend ↔ database integration
 
 ---
@@ -42,6 +45,18 @@ https://pro-tasker-backend-t7ye.onrender.com
 - JWT-based authentication
 - Token stored in localStorage
 - Axios interceptor automatically attaches token to protected requests
+
+---
+
+## 🤖 AI Project Assistant
+
+The AI Project Assistant uses the Cohere Chat API to analyze project information and generate actionable recommendations.
+
+The AI provides:
+
+- Project summary
+- Recommended next steps
+- Potential blockers
 
 ---
 
@@ -63,7 +78,7 @@ pro-tasker-mern-app/
 
 ```bash
 git clone https://github.com/DiyBookOfLife/pro-tasker-mern-app
-cd pro-tasker
+cd pro-tasker-mern-app
 ```
 
 ### 2. Backend Setup
@@ -87,7 +102,7 @@ npm run dev
 ## 🌐 API Base URL
 
 ```bash
-http://localhost:5050/api
+http://localhost:10000/api
 ```
 
 Production:
